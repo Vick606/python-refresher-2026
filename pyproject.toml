@@ -10,6 +10,7 @@ dependencies = []
 [dependency-groups]
 dev = [
     "pytest>=9.1.1",
+    "pytest-cov",
     "ruff>=0.16.8",
 ]
 
@@ -18,8 +19,17 @@ line-length = 100
 target-version = "py314"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "W"]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "W", "S"]
 
-[tool.pytest]
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["-q", "--strict-markers"]
+addopts = [
+    "-q",
+    "--strict-markers",
+    "--cov=units",
+    "--cov-report=term-missing",
+]
+pythonpath = ["."]
