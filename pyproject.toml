@@ -1,7 +1,10 @@
 [project]
 name = "python-refresher-2026"
 version = "0.1.0"
+description = "A practical Python refresher for developers building professional engineering habits."
+readme = "README.md"
 requires-python = ">=3.14"
+license = { text = "MIT" }
 dependencies = []
 
 [dependency-groups]
@@ -9,3 +12,14 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.16.8",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "W"]
+
+[tool.pytest]
+testpaths = ["tests"]
+addopts = ["-q", "--strict-markers"]
