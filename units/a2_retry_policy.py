@@ -1,7 +1,13 @@
-"""A2: model a conservative retry decision for an external HTTP service.
+"""Model a conservative retry decision for an external HTTP service.
 
-A retry is appropriate only when a failure is likely transient. Retrying every
-4xx response is wrong: most client errors will not succeed on a second attempt.
+A retry is appropriate only when a failure is likely transient. Retrying
+every 4xx response is wrong: most client errors will not succeed on a
+second attempt.
+
+The opposite failure is also real. Retrying *every* failure amplifies cost
+and traffic, and against rate-limited APIs (LLM providers, in particular)
+it can trigger throttling bans. The safe policy is therefore narrow:
+retry only known-transient status codes -- 408, 429, and 5xx server errors.
 
 Run:
     uv run python units/a2_retry_policy.py
@@ -21,5 +27,5 @@ def main() -> None:
         print(f"{status_code}: retry={should_retry(status_code)}")
 
 
-if __name__ == "__&#8203;main__":
+if __name__ == "__main__":
     main()
